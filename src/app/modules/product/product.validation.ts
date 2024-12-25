@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ProductCategory } from "./product.constant";
 
-const ProductImageURLSchema = z.object({
+const createProductImageURLSchema = z.object({
     imageUrl: z
         .string({
             required_error: "Image URL is required",
@@ -10,7 +10,7 @@ const ProductImageURLSchema = z.object({
         .url("Invalid URL format"),
 });
 
-const ProductSchema = z.object({
+const createProductSchema = z.object({
     name: z.string({
         required_error: "Product name is required",
         invalid_type_error: "Product name must be a string",
@@ -37,15 +37,11 @@ const ProductSchema = z.object({
         }),
     }),
     images: z
-        .array(ProductImageURLSchema, {
+        .array(createProductImageURLSchema, {
             required_error: "Product image is required",
             invalid_type_error: "Product images must be an array of image URLs",
         })
         .nonempty(),
-    seller: z.string({
-        required_error: "Product seller is required",
-        invalid_type_error: "Product seller must be a string",
-    }),
     stock: z
         .number({
             invalid_type_error: "Stock must be a number",
@@ -56,5 +52,5 @@ const ProductSchema = z.object({
 });
 
 export const ProductValidations = {
-    ProductSchema,
+    createProductSchema,
 };
