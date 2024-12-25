@@ -9,4 +9,4 @@ export const ProductCategory: TProductCategory[] = [
     `Home Decor`,
     `Toys`,
     `Others`,
-]as const;
+] as const;

@@ -1,7 +1,6 @@
-import { model, Schema } from 'mongoose';
-import { IProduct } from './product.interface';
-import { ProductCategory } from './product.constant';
-
+import { model, Schema } from "mongoose";
+import { IProduct } from "./product.interface";
+import { ProductCategory } from "./product.constant";
 
 const productSchema = new Schema<IProduct>(
     {
@@ -26,20 +25,20 @@ const productSchema = new Schema<IProduct>(
             required: [true, `Product category is required`],
             enum: {
                 values: ProductCategory,
-                message: `Product category must be one of these ${ProductCategory}. {VALUE} is not valid`
+                message: `Product category must be one of these ${ProductCategory}. {VALUE} is not valid`,
             },
         },
         images: {
             type: [
                 {
-                    imageUrl: String
-                }
+                    imageUrl: String,
+                },
             ],
-            required: [true, `Product image is required`]
+            required: [true, `Product image is required`],
         },
         seller: {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            ref: "User",
             required: [true, `Product seller is required`],
         },
         stock: {
@@ -48,10 +47,10 @@ const productSchema = new Schema<IProduct>(
         },
     },
     {
-        timestamps: true
-    }
+        timestamps: true,
+    },
 );
 
-const Product = model<IProduct>('Product', productSchema);
+const Product = model<IProduct>("Product", productSchema);
 
 export default Product;
