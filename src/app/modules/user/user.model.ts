@@ -1,7 +1,8 @@
 import { model, Schema } from "mongoose";
 import { UserRoles } from "./user.constant";
+import { IUser } from "./use.interface";
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
     {
         email: {
             type: String,
@@ -28,5 +29,5 @@ const userSchema = new Schema(
     },
 );
 
-const User = model("User", userSchema);
+const User = model<IUser>("User", userSchema);
 export default User;
