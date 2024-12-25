@@ -7,7 +7,7 @@ const moduleRoutes = [
     {
         path: `/authentication`,
         route: AuthRouter,
-    }
+    },
 ];
 
 moduleRoutes?.forEach((route) => router.use(route?.path, route?.route));

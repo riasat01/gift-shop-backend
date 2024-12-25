@@ -17,7 +17,7 @@ app.get(`/`, async (req, res) => {
         statusCode: httpStatus.OK,
         success: true,
         message: `Server is responding`,
-        data: undefined
+        data: undefined,
     });
 });
 

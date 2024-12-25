@@ -2,9 +2,8 @@ import config from "../../config";
 import { createToken } from "./auth.utils";
 
 const loginUserService = async (payload: string) => {
-
     const jwtPayload = {
-        email: payload
+        email: payload,
     };
 
     const accessToken = createToken(
