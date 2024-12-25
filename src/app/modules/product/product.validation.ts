@@ -51,6 +51,62 @@ const createProductSchema = z.object({
         .default(0),
 });
 
+const updateProductImageURLSchema = z.object({
+    imageUrl: z
+        .string({
+            invalid_type_error: "Image URL must be a string",
+        })
+        .url("Invalid URL format")
+        .optional(),
+});
+
+const updateProductSchema = z.object({
+    name: z
+        .string({
+            invalid_type_error: "Product name must be a string",
+        })
+        .optional(),
+    description: z
+        .string({
+            invalid_type_error: "Product description must be a string",
+        })
+        .optional(),
+    price: z
+        .number({
+            invalid_type_error: "Product price must be a number",
+        })
+        .nonnegative("Product price must be a non-negative number")
+        .optional(),
+    brand: z
+        .string({
+            invalid_type_error: "Product brand must be a string",
+        })
+        .optional(),
+    category: z
+        .enum([...ProductCategory] as [string, ...string[]], {
+            invalid_type_error: "Product category must be a valid enum value",
+            errorMap: () => ({
+                message: `Product category must be one of these ${ProductCategory.join(", ")}`,
+            }),
+        })
+        .optional(),
+    images: z
+        .array(updateProductImageURLSchema, {
+            invalid_type_error: "Product images must be an array of image URLs",
+        })
+        .nonempty()
+        .optional(),
+    stock: z
+        .number({
+            invalid_type_error: "Stock must be a number",
+        })
+        .int()
+        .nonnegative()
+        .default(0)
+        .optional(),
+});
+
 export const ProductValidations = {
     createProductSchema,
+    updateProductSchema,
 };

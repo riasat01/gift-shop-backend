@@ -23,4 +23,5 @@ export interface IProduct {
     images: IProductImageURL[];
     seller: Types.ObjectId;
     stock: number;
+    isDeleted: boolean;
 }

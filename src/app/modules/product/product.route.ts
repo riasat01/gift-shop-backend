@@ -10,7 +10,20 @@ router.post(
     `/create-product`,
     auth(),
     validateRequest(ProductValidations.createProductSchema),
-    ProductControllers.createproduct,
+    ProductControllers.createProduct,
 );
+router.patch(
+    `/update-product/:id`,
+    auth(),
+    validateRequest(ProductValidations.updateProductSchema),
+    ProductControllers.createProduct,
+);
+router.delete(`/delete-product/:id`, auth(), ProductControllers.createProduct);
+router.get(
+    `/seller-products/:sellerId`,
+    auth(),
+    ProductControllers.createProduct,
+);
+router.get(`/`, ProductControllers.createProduct);
 
 export const ProductRouter = router;
