@@ -23,6 +23,10 @@ const userSchema = new Schema<IUser>(
             required: true,
         },
         phone: String,
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

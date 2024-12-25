@@ -6,4 +6,5 @@ export interface IUser {
     firebaseUID: string;
     name: string;
     phone?: string;
+    isDeleted: boolean;
 }
