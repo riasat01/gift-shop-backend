@@ -42,7 +42,7 @@ const getProductsInWishlistByUser = catchAsync(async (req, res) => {
     });
 });
 
-export const WishlistController = {
+export const WishlistControllers = {
     addProductToWishlist,
     deleteProductFromWishlist,
     getProductsInWishlistByUser,
