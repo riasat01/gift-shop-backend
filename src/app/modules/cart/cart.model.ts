@@ -34,5 +34,30 @@ const cartSchema = new Schema<ICart>(
     { timestamps: true },
 );
 
+// Pre hook to filter out deleted products before any find query
+cartSchema.pre("find", function (next) {
+    this.where({ "products.isDeleted": { $ne: true } });
+    next();
+});
+
+// Pre hook to filter out deleted products before any findOne query
+cartSchema.pre("findOne", function (next) {
+    this.where({ "products.isDeleted": { $ne: true } });
+    next();
+});
+
+// Post hook to filter out deleted products from the result
+cartSchema.post("find", function (docs: ICart[]) {
+    docs.forEach((doc) => {
+        doc.products = doc.products.filter((product) => !product.isDeleted);
+    });
+});
+
+cartSchema.post("findOne", function (doc: ICart) {
+    if (doc) {
+        doc.products = doc.products.filter((product) => !product.isDeleted);
+    }
+});
+
 const Cart = model<ICart>("Cart", cartSchema);
 export default Cart;

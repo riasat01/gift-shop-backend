@@ -59,9 +59,10 @@ const addProductToCartIntoDB = async (
             const updatedCart = await Cart.findOne({ user: user._id }, null, {
                 session,
             });
-            const totalPrice = await calculateTotalPrice(
-                (updatedCart as ICart).products,
+            const filteredProducts = (updatedCart as ICart).products.filter(
+                (product) => !product.isDeleted,
             );
+            const totalPrice = await calculateTotalPrice(filteredProducts);
             await Cart.updateOne(
                 { user: user._id },
                 { $set: { totalPrice } },
@@ -129,9 +130,10 @@ const deleteProductFromCartFromDB = async (
         const updatedCart = await Cart.findOne({ user: user._id }, null, {
             session,
         });
-        const totalPrice = await calculateTotalPrice(
-            (updatedCart as ICart).products,
+        const filteredProducts = (updatedCart as ICart).products.filter(
+            (product) => !product.isDeleted,
         );
+        const totalPrice = await calculateTotalPrice(filteredProducts);
         await Cart.updateOne(
             { user: user._id },
             { $set: { totalPrice } },

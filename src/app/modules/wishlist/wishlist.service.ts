@@ -11,15 +11,15 @@ const addProductToWishlistIntoDB = async (
     if (!user) {
         throw new CustomError(
             httpStatus.BAD_REQUEST,
-            `Could found the user`,
-            `addProductToWishlistIntoDb`,
+            `Could not find the user`,
+            `addProductToWishlistIntoDB`,
         );
     }
     const wishlist = await Wishlist.findOne({ user: user._id });
     if (!wishlist) {
         const newWishlist = await Wishlist.create({
             user: user._id,
-            products: [products.map(({ product }) => ({ product }))],
+            products: products.map(({ product }) => ({ product })),
         });
         return newWishlist;
     } else {
@@ -45,7 +45,7 @@ const deleteProductFromWishlistFromDB = async (
         throw new CustomError(
             httpStatus.BAD_REQUEST,
             `Could not find the user`,
-            `deleteProductFromCartFromDB`,
+            `deleteProductFromWishlistFromDB`,
         );
     }
 
@@ -54,7 +54,7 @@ const deleteProductFromWishlistFromDB = async (
         throw new CustomError(
             httpStatus.NOT_FOUND,
             `Wishlist not found`,
-            `deleteProductFromCartFromDB`,
+            `deleteProductFromWishlistFromDB`,
         );
     }
 
@@ -76,7 +76,7 @@ const deleteProductFromWishlistFromDB = async (
         throw new CustomError(
             httpStatus.NOT_FOUND,
             `Wishlist or product not found`,
-            `deleteProductFromCartFromDB`,
+            `deleteProductFromWishlistFromDB`,
         );
     }
     return wishlist;
@@ -103,7 +103,11 @@ const getProductsInWishlistByUserFromDB = async (user: JwtPayload) => {
         );
     }
 
-    return wishlist.products;
+    const filteredProducts = wishlist.products.filter(
+        (product) => !product.isDeleted,
+    );
+
+    return filteredProducts;
 };
 
 export const WishlistServices = {
