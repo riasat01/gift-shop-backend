@@ -26,6 +26,10 @@ const cartSchema = new Schema<ICart>(
                 },
             },
         ],
+        totalPrice: {
+            type: Number,
+            required: true,
+        },
     },
     { timestamps: true },
 );

@@ -14,6 +14,6 @@ const createCartValidationSchema = z.object({
     }),
 });
 
-export const WishlistValidations = {
+export const CartValidations = {
     createCartValidationSchema,
 };

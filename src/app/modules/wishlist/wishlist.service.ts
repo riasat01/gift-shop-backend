@@ -2,9 +2,10 @@ import { JwtPayload } from "jsonwebtoken";
 import Wishlist from "./wishlist.model";
 import CustomError from "../../error/CustomError";
 import httpStatus from "http-status";
+import { IWishlistProduct } from "./wishlist.interface";
 
 const addProductToWishlistIntoDB = async (
-    products: string[],
+    products: Partial<IWishlistProduct>[],
     user: JwtPayload,
 ) => {
     if (!user) {
@@ -18,7 +19,7 @@ const addProductToWishlistIntoDB = async (
     if (!wishlist) {
         const newWishlist = await Wishlist.create({
             user: user._id,
-            products: [products.map((product) => ({ product }))],
+            products: [products.map(({ product }) => ({ product }))],
         });
         return newWishlist;
     } else {
@@ -27,7 +28,7 @@ const addProductToWishlistIntoDB = async (
             {
                 $push: {
                     products: {
-                        $each: products.map((product) => ({ product })),
+                        $each: products.map(({ product }) => ({ product })),
                     },
                 },
             },
